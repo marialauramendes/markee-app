@@ -1,14 +1,21 @@
-import styled, { css } from 'styled-components/macro'
+import styled from 'styled-components/macro'
+import { Sidebar } from 'sidebar'
 
 function App () {
   return (
-    <Title>App</Title>
+    <Container>
+      <Sidebar />
+    </Container>
   )
 }
 
-const Title = styled.h1`${({ theme }) => css`
-  color: ${theme.colors.primary};
-  background-color: ${theme.colors.black}
-`}`
+const Container = styled.div`
+  display:grid;
+  width:100%;
+  height: 100vh;
+  grid-template-columns: 332px 1fr 1fr;
+  grid-template-areas:
+  'sidebar content content';
+`
 
 export { App }
