@@ -4,15 +4,17 @@ import fileBlueIcon from 'images/file-blue-icon.svg'
 function Content () {
   return (
     <Main>
-      <Input type='text' placeholder='Contribut' />
+      <Input type='text' value='Contribut' />
       <ContainerFlex>
         <Plaintext>
-          <Textarea />
+          <Textarea>
+            ## Bootcamp Brainn Co
+          </Textarea>
         </Plaintext>
-        <PreviewWrapper>
-          <h1>Bootcamp Brainn Co.</h1>
-          <p>Lorem ipsum dolor sit amet simet</p>
-        </PreviewWrapper>
+        <Output>
+          <H2>Bootcamp Brainn Co.</H2>
+          <P>Lorem ipsum dolor sit amet simet</P>
+        </Output>
       </ContainerFlex>
     </Main>
   )
@@ -45,6 +47,12 @@ const Input = styled.input`
     stroke-opacity:0.65;
     margin-right:20px;
   }
+  &:focus-visible{
+    outline:none;
+  }
+  &:-webkit-direct-focus {
+    outline:none;
+  }
 `
 
 const ContainerFlex = styled.div`
@@ -58,23 +66,49 @@ const Plaintext = styled.div`
   width:50%;
   height: 100%;
   border-right: 2px solid rgba(30, 41, 59, 0.12);
-  padding:24px;
 `
 
 const Textarea = styled.textarea`
   display: block;
   width:100%;
+  height: 100%;
   border: none;
+  font-family: 'Inconsolata', sans-serif;
+  font-weight: 500;
+  font-size: 1.8rem;
+  line-height: 1.9rem;
+  resize:none;
+  padding: 0 24px 24px;
+  opacity: .86;
 
-  &:focus-visible {
+  &:focus-visible{
+    outline:none;
+  }
+  &:-webkit-direct-focus {
     outline:none;
   }
 `
 
-const PreviewWrapper = styled.div`
+const Output = styled.output`
   width:50%;
   height:100%;
-  padding:24px;
+  padding: 0 24px 24px;
+`
+
+const H2 = styled.h2`
+  font-size: 3.2rem;
+  line-height: 4.2rem;
+  font-weight: 700;
+  color: ${props => props.theme.colors.black};
+  margin-top:0;
+  margin-bottom: 3px;
+`
+const P = styled.p`
+  font-size: 1.8rem;
+  line-height: 2.3rem;
+  font-weight: 400;
+  color: ${props => props.theme.colors.black};
+  opacity:.70;
 
 `
 export { Content }
