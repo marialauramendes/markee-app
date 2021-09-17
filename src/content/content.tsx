@@ -79,6 +79,7 @@ const Textarea = styled.textarea`
   line-height: 1.9rem;
   resize:none;
   padding: 0 24px 24px;
+  background-color: transparent;
   opacity: .86;
 
   &:focus-visible{

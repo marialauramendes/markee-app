@@ -33,13 +33,13 @@ font-size: 3.3rem;
 line-height:4.4rem;
 letter-spacing: -0.08em;
 text-transform: lowercase;
-color: ${props => props.theme.colors.white}
+color: ${({ theme }) => theme.colors.white}
 ;
 margin-left:13px;
 `
 
 const Dot = styled.span`
-color: ${props => props.theme.colors.primary}
+color: ${({ theme }) => theme.colors.primary}
 ;
 `
 
