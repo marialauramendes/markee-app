@@ -1,7 +1,7 @@
 import styled from 'styled-components/macro'
 import { Header } from './header'
 import { Subtitle } from './subtitle'
-import add from 'images/add-icon.svg'
+import Add from 'icons/add-icon.svg'
 import { Navigation } from './nav-list'
 
 function Sidebar () {
@@ -10,7 +10,7 @@ function Sidebar () {
       <Header />
       <Subtitle />
       <Button type='button'>
-        <img src={add} alt='add' />
+        <img src={Add} alt='add' />
         Adicionar arquivo
       </Button>
       <Navigation />
@@ -39,9 +39,14 @@ const Button = styled.button`
   border-radius: 4px;
   padding:8px;
   margin-bottom:34px;
+  cursor: pointer;
 
   img{
     margin-right:12px;
+  }
+
+  &:hover{
+    background-color: ${({ theme }) => theme.colors.primaryDark};
   }
 
 `
