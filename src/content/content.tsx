@@ -1,18 +1,38 @@
 import styled from 'styled-components/macro'
 import FileBlueIcon from 'icons/file-blue-icon.svg'
+import { ChangeEvent, useState } from 'react'
+import marked from 'marked'
+import 'highlight.js/styles/github.css'
+
+import('highlight.js').then(hljs => {
+  const h = hljs.default
+
+  marked.setOptions({
+    highlight: (code, language) => {
+      if (language && h.getLanguage(language)) {
+        return h.highlight(code, { language }).value
+      } else {
+        return h.highlightAuto(code).value
+      }
+    },
+  })
+})
 
 function Content () {
+  const [content, setContent] = useState('')
+
+  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setContent(e.target.value)
+  }
+
   return (
     <Main>
-      <Input type='text' placeholder='Contribut' />
+      <Input type='text' defaultValue='Sem título' />
       <ContainerFlex>
         <Plaintext>
-          <Textarea placeholder='## Bootcamp Brainn Co' />
+          <Textarea placeholder='Digite aqui seu markdown' value={content} onChange={handleChange} />
         </Plaintext>
-        <Output>
-          <h2>Bootcamp Brainn Co.</h2>
-          <p>Lorem ipsum dolor sit amet simet</p>
-        </Output>
+        <Output dangerouslySetInnerHTML={{ __html: marked(content) }} />
       </ContainerFlex>
     </Main>
   )
