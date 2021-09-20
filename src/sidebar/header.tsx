@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro'
-import logo from 'images/logo.svg'
+import logo from './logo.svg'
 
 function Header () {
   return (
@@ -27,15 +27,16 @@ const LogoBox = styled.div`
 `
 
 const H1 = styled.h1`
-font-family: 'DM Sans', sans-serif;
-font-weight: 700;
-font-size: 3.3rem;
-line-height:4.4rem;
-letter-spacing: -0.08em;
-text-transform: lowercase;
-color: ${({ theme }) => theme.colors.white}
-;
-margin-left:13px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 3.3rem;
+  line-height:4.4rem;
+  letter-spacing: -0.08em;
+  text-transform: lowercase;
+  color: ${({ theme }) => theme.colors.white}
+  ;
+  margin-left:13px;
+  cursor: default;
 `
 
 const Dot = styled.span`
