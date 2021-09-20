@@ -36,15 +36,15 @@ const ListItem = styled.li<ListItemProps>`${({ theme, active }) => css`
     svg{
       stroke: ${!active && theme.colors.white};
     }
-    & button{
+    & ${DeleteButton}{
       display:block;
     }
   }
 
-  a {
+  a{
     svg{
-    stroke: ${active ? theme.colors.primary : 'rgba(255,255,255,.65)'};
-    margin-right:20px;
+      stroke: ${active ? theme.colors.primary : 'rgba(255,255,255,.65)'};
+      margin-right:20px;
     }
   }
 
@@ -57,6 +57,7 @@ const Link = styled.a`
   color:inherit;
   text-decoration: none;
   transition:.3s;
+  cursor: pointer;
 
 `
 
@@ -73,6 +74,7 @@ const DeleteButton = styled.button`
   background-color:transparent;
   border:none;
   padding:0;
+  cursor: pointer;
 `
 
 export { List, ListItem, Link, Status, DeleteButton }
