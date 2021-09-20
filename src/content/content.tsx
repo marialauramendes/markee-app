@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro'
-import fileBlueIcon from 'images/file-blue-icon.svg'
+import FileBlueIcon from 'icons/file-blue-icon.svg'
 
 function Content () {
   return (
@@ -34,7 +34,7 @@ const Input = styled.input`
   color: ${props => props.theme.colors.black};
   border: none;
   background-color:transparent;
-  background-image: url(${fileBlueIcon});
+  background-image: url(${FileBlueIcon});
   background-repeat: no-repeat;
   background-size:contain;
   padding-left: 36px;
