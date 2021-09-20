@@ -2,37 +2,45 @@ import styled from 'styled-components/macro'
 
 function Subtitle () {
   return (
-    <SubtitleWrapper>
-      <Line />
-      <H2>Arquivos</H2>
-      <Line />
-    </SubtitleWrapper>
+    <H2>
+      <span>Arquivos</span>
+    </H2>
   )
 }
 
-const SubtitleWrapper = styled.div`
-  display:flex;
-  align-items: center;
-  margin-bottom:24px;
-`
-
 const H2 = styled.h2`
-  font-weight: 500;
+  position: relative;
   font-size: 1.6rem;
   line-height: 2.1rem;
+  font-weight: 500;
   letter-spacing: -0.02em;
-  color: ${props => props.theme.colors.white};
-  margin-left: 6px;
-  margin-right: 6px;
-`
+  color: ${({ theme }) => theme.colors.white};
+  padding-left:20px;
+  margin-bottom:24px;
 
-const Line = styled.span`
-  width:100%;
-  border-bottom: 2px solid ${props => props.theme.colors.primary};
-  border-radius:5px;
-  :first-child{
-    width:13.5px;
+  span{
+    position:relative;
+    z-index:2;
+    display:inline-block;
+    padding-left:10px;
+    padding-right:10px;
+    background-color: ${({ theme }) => theme.colors.black};
   }
+
+  &::before{
+    content: '';
+    position:absolute;
+    left:0;
+    top:50%;
+    transform: translateY(-50%);
+    z-index:0;
+    display:block;
+    height:2px;
+    width:100%;
+    background-color: ${props => props.theme.colors.primary};
+    border-radius:2px;
+  }
+
 `
 
 export { Subtitle }

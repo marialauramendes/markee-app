@@ -1,4 +1,5 @@
-import { FileIcon, EditingIcon, SavingIcon, SavedIcon, DeleteIcon } from './icons'
+import styled, { keyframes } from 'styled-components/macro'
+import { FileIcon, Editing, Saving, Saved, Delete } from '../icons'
 import { List, ListItem, Link, Status, DeleteButton } from './nav-styles'
 
 type archivesProps = {
@@ -43,7 +44,7 @@ const archives: archivesProps[] = [
     name: 'roadmap.md',
     content: '',
     active: true,
-    status: 'editing',
+    status: 'saving',
   },
 ]
 
@@ -52,17 +53,17 @@ function Navigation () {
     <nav>
       <List>
         {archives.map((item) => (
-          <ListItem key={item.id} active={item.active}>
+          <ListItem key={`file/${item.id}`} active={item.active}>
             <Link href={item.id}>
               <FileIcon />
               {item.name}
             </Link>
             <Status>
-              {item.active && item.status === 'editing' && <EditingIcon />}
-              {item.active && item.status === 'saving' && <SavingIcon />}
-              {item.active && item.status === 'saved' && <SavedIcon />}
+              {item.active && item.status === 'editing' && <Editing />}
+              {item.active && item.status === 'saving' && <Loading />}
+              {item.active && item.status === 'saved' && <Saved />}
             </Status>
-            {item.active === false && <DeleteButton><DeleteIcon /></DeleteButton>}
+            {item.active === false && <DeleteButton><Delete /></DeleteButton>}
           </ListItem>
         ))},
       </List>
@@ -70,4 +71,17 @@ function Navigation () {
   )
 }
 
+const rotation = keyframes`
+  from{
+    transform: rotate(0deg);
+  }
+  to{
+    transform: rotate(359deg);
+
+  }
+`
+
+const Loading = styled(Saving)`
+  animation: ${rotation} 1s infinite linear;
+`
 export { Navigation }

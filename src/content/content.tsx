@@ -4,16 +4,14 @@ import fileBlueIcon from 'images/file-blue-icon.svg'
 function Content () {
   return (
     <Main>
-      <Input type='text' value='Contribut' />
+      <Input type='text' placeholder='Contribut' />
       <ContainerFlex>
         <Plaintext>
-          <Textarea>
-            ## Bootcamp Brainn Co
-          </Textarea>
+          <Textarea placeholder='## Bootcamp Brainn Co' />
         </Plaintext>
         <Output>
-          <H2>Bootcamp Brainn Co.</H2>
-          <P>Lorem ipsum dolor sit amet simet</P>
+          <h2>Bootcamp Brainn Co.</h2>
+          <p>Lorem ipsum dolor sit amet simet</p>
         </Output>
       </ContainerFlex>
     </Main>
@@ -24,7 +22,7 @@ const Main = styled.main`
   padding-top: 24px;
   padding-bottom: 24px;
   grid-area: content;
-
+  background-color: ${({ theme }) => theme.colors.white};
 `
 
 const Input = styled.input`
@@ -35,6 +33,7 @@ const Input = styled.input`
   text-transform:uppercase;
   color: ${props => props.theme.colors.black};
   border: none;
+  background-color:transparent;
   background-image: url(${fileBlueIcon});
   background-repeat: no-repeat;
   background-size:contain;
@@ -65,7 +64,7 @@ const Plaintext = styled.div`
   display: block;
   width:50%;
   height: 100%;
-  border-right: 2px solid rgba(30, 41, 59, 0.12);
+  border-right: 2px solid ${({ theme }) => theme.colors.gray};
 `
 
 const Textarea = styled.textarea`
@@ -90,26 +89,32 @@ const Textarea = styled.textarea`
   }
 `
 
-const Output = styled.output`
+const Output = styled.article`
   width:50%;
   height:100%;
   padding: 0 24px 24px;
+  background-color:transparent;
+
+  h1, h2, h3, h4, h5, h6{
+    margin-top: 0;
+  }
+
+  h2{
+    font-size: 3.2rem;
+    line-height: 4.2rem;
+    font-weight: 700;
+    color: ${props => props.theme.colors.black};
+    margin-top:0;
+    margin-bottom: 3px;
+  }
+
+  p{
+    font-size: 1.8rem;
+    line-height: 2.3rem;
+    font-weight: 400;
+    color: ${props => props.theme.colors.black};
+    opacity:.70;
+  }
 `
 
-const H2 = styled.h2`
-  font-size: 3.2rem;
-  line-height: 4.2rem;
-  font-weight: 700;
-  color: ${props => props.theme.colors.black};
-  margin-top:0;
-  margin-bottom: 3px;
-`
-const P = styled.p`
-  font-size: 1.8rem;
-  line-height: 2.3rem;
-  font-weight: 400;
-  color: ${props => props.theme.colors.black};
-  opacity:.70;
-
-`
 export { Content }
