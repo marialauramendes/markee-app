@@ -7,7 +7,7 @@ import { archivesProps } from 'resources/types/archives-props'
 import { useState } from 'react'
 
 function Sidebar () {
-  const [archives] = useState<archivesProps>([
+  const [archives, setNewFile] = useState<archivesProps>([
     {
       id: '0',
       name: 'Sem título',
@@ -18,11 +18,22 @@ function Sidebar () {
   ])
   console.log(archives)
 
+  const handleClick = () => {
+    setNewFile(prevData => [...prevData, {
+      id: '1',
+      name: 'Sem título',
+      content: '',
+      active: true,
+      status: 'saved',
+    }],
+    )
+  }
+
   return (
     <SidebarWrapper>
       <Header />
       <Subtitle />
-      <Button type='button'>
+      <Button type='button' onClick={handleClick}>
         <img src={Add} alt='add' />
         Adicionar arquivo
       </Button>
