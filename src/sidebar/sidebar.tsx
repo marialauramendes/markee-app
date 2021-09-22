@@ -28,6 +28,12 @@ function Sidebar () {
       status: 'saved',
     }],
     )
+    if (archives.length > 0) {
+      archives.map((item) => {
+        item.active = false
+        return item.active
+      })
+    }
   }
 
   return (
