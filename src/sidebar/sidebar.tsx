@@ -3,8 +3,21 @@ import { Header } from './header'
 import { Subtitle } from './subtitle'
 import Add from 'icons/add-icon.svg'
 import { Navigation } from './nav-list'
+import { archivesProps } from 'resources/types/archives-props'
+import { useState } from 'react'
 
 function Sidebar () {
+  const [archives] = useState<archivesProps>([
+    {
+      id: '0',
+      name: 'Sem título',
+      content: '',
+      active: true,
+      status: 'saved',
+    },
+  ])
+  console.log(archives)
+
   return (
     <SidebarWrapper>
       <Header />
@@ -13,7 +26,7 @@ function Sidebar () {
         <img src={Add} alt='add' />
         Adicionar arquivo
       </Button>
-      <Navigation />
+      <Navigation archives={archives} />
     </SidebarWrapper>
   )
 }
