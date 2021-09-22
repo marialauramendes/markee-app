@@ -5,11 +5,12 @@ import Add from 'icons/add-icon.svg'
 import { Navigation } from './nav-list'
 import { archivesProps } from 'resources/types/archives-props'
 import { useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
 function Sidebar () {
   const [archives, setNewFile] = useState<archivesProps>([
     {
-      id: '0',
+      id: uuidv4(),
       name: 'Sem título',
       content: '',
       active: true,
@@ -20,7 +21,7 @@ function Sidebar () {
 
   const handleClick = () => {
     setNewFile(prevData => [...prevData, {
-      id: '1',
+      id: uuidv4(),
       name: 'Sem título',
       content: '',
       active: true,
