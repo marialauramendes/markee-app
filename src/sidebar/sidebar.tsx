@@ -3,17 +3,48 @@ import { Header } from './header'
 import { Subtitle } from './subtitle'
 import Add from 'icons/add-icon.svg'
 import { Navigation } from './nav-list'
+import { archivesProps } from 'resources/types/archives-props'
+import { useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
 function Sidebar () {
+  const [archives, setNewFile] = useState<archivesProps>([
+    {
+      id: uuidv4(),
+      name: 'Sem título',
+      content: '',
+      active: true,
+      status: 'saved',
+    },
+  ])
+  console.log(archives)
+
+  const handleClick = () => {
+    setNewFile(prevData => [...prevData, {
+      id: uuidv4(),
+      name: 'Sem título',
+      content: '',
+      active: true,
+      status: 'saved',
+    }],
+    )
+    if (archives.length > 0) {
+      archives.map((item) => {
+        item.active = false
+        return item.active
+      })
+    }
+  }
+
   return (
     <SidebarWrapper>
       <Header />
       <Subtitle />
-      <Button type='button'>
+      <Button type='button' onClick={handleClick}>
         <img src={Add} alt='add' />
         Adicionar arquivo
       </Button>
-      <Navigation />
+      <Navigation archives={archives} />
     </SidebarWrapper>
   )
 }

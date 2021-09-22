@@ -1,54 +1,13 @@
+import { archivesProps } from 'resources/types/archives-props'
 import styled, { keyframes } from 'styled-components/macro'
 import { FileIcon, Editing, Saving, Saved, Delete } from '../icons'
 import { List, ListItem, Link, Status, DeleteButton } from './nav-styles'
 
-type archivesProps = {
-  id: string
-  name: string
-  content: string
-  active: boolean
-  status: 'editing' | 'saving' | 'saved',
+type NavProps = {
+  archives: archivesProps
 }
 
-const archives: archivesProps[] = [
-  {
-    id: 'Readme.md',
-    name: 'Readme.md',
-    content: '',
-    active: false,
-    status: 'saved',
-  },
-  {
-    id: 'CONTRIBUT.md',
-    name: 'CONTRIBUT.md',
-    content: '',
-    active: false,
-    status: 'saved',
-  },
-  {
-    id: 'LICENSE.md',
-    name: 'LICENSE.md',
-    content: '',
-    active: false,
-    status: 'saved',
-  },
-  {
-    id: 'Links.md',
-    name: 'Links.md',
-    content: '',
-    active: false,
-    status: 'saved',
-  },
-  {
-    id: 'roadmap.md',
-    name: 'roadmap.md',
-    content: '',
-    active: true,
-    status: 'saving',
-  },
-]
-
-function Navigation () {
+function Navigation ({ archives }: NavProps) {
   return (
     <nav>
       <List>
