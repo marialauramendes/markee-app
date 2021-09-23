@@ -1,39 +1,29 @@
-import styled from 'styled-components/macro'
 import { Header } from './header'
 import { Subtitle } from './subtitle'
 import Add from 'icons/add-icon.svg'
-import { Navigation } from './nav-list'
+import { FileIcon, Editing, Saved, Delete } from '../icons'
+import { SidebarWrapper, Button, List, ListItem, Link, Status, DeleteButton, Loading } from './sidebar-styles'
 import { archivesProps } from 'resources/types/archives-props'
 import { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
 function Sidebar () {
-  const [archives, setNewFile] = useState<archivesProps>([
-    {
-      id: uuidv4(),
-      name: 'Sem título',
-      content: '',
-      active: true,
-      status: 'saved',
-    },
-  ])
+  const [archives, setArchives] = useState<archivesProps>([])
   console.log(archives)
 
   const handleClick = () => {
-    setNewFile(prevData => [...prevData, {
+    setArchives(archives => archives.map(
+      item => ({
+        ...item,
+        active: false,
+      })).concat({
       id: uuidv4(),
       name: 'Sem título',
       content: '',
       active: true,
       status: 'saved',
-    }],
+    }),
     )
-    if (archives.length > 0) {
-      archives.map((item) => {
-        item.active = false
-        return item.active
-      })
-    }
   }
 
   return (
@@ -44,41 +34,26 @@ function Sidebar () {
         <img src={Add} alt='add' />
         Adicionar arquivo
       </Button>
-      <Navigation archives={archives} />
+      <nav>
+        <List>
+          {archives.map((item) => (
+            <ListItem key={`file/${item.id}`} active={item.active}>
+              <Link href={item.id}>
+                <FileIcon />
+                {item.name}
+              </Link>
+              <Status>
+                {item.active && item.status === 'editing' && <Editing />}
+                {item.active && item.status === 'saving' && <Loading />}
+                {item.active && item.status === 'saved' && <Saved />}
+              </Status>
+              {item.active === false && <DeleteButton><Delete /></DeleteButton>}
+            </ListItem>
+          ))},
+        </List>
+      </nav>
     </SidebarWrapper>
   )
 }
 
-const SidebarWrapper = styled.aside`
-  grid-area: sidebar;
-  background-color: ${(props) => props.theme.colors.black};
-  padding:45px 32px;
-
-`
-
-const Button = styled.button`
-  display: flex;
-  align-items:center;
-  justify-content:center;
-  width:100%;
-  height: 34px;
-  background-color: ${props => props.theme.colors.primary};
-  color: ${props => props.theme.colors.lightBlack};
-  font-size: 1.3rem;
-  font-weight:400;
-  border:none;
-  border-radius: 4px;
-  padding:8px;
-  margin-bottom:34px;
-  cursor: pointer;
-
-  img{
-    margin-right:12px;
-  }
-
-  &:hover{
-    background-color: ${({ theme }) => theme.colors.primaryDark};
-  }
-
-`
 export { Sidebar }
