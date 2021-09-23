@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro'
 import FileBlueIcon from 'icons/file-blue-icon.svg'
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, RefObject, useState } from 'react'
 import marked from 'marked'
 import 'highlight.js/styles/github.css'
 
@@ -18,7 +18,11 @@ import('highlight.js').then(hljs => {
   })
 })
 
-function Content () {
+type ContentProps ={
+  inputRef: RefObject<HTMLInputElement>
+}
+
+function Content ({ inputRef }: ContentProps) {
   const [content, setContent] = useState('')
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -27,7 +31,7 @@ function Content () {
 
   return (
     <Main>
-      <Input type='text' defaultValue='Sem título' />
+      <Input type='text' defaultValue='Sem título' ref={inputRef} />
       <ContainerFlex>
         <Plaintext>
           <Textarea placeholder='Digite aqui seu markdown' value={content} onChange={handleChange} />

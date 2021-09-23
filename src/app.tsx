@@ -1,12 +1,15 @@
 import styled from 'styled-components/macro'
 import { Sidebar } from 'sidebar'
 import { Content } from 'content'
+import { useRef } from 'react'
 
 function App () {
+  const inputRef = useRef<HTMLInputElement>(null)
+
   return (
     <Container>
-      <Sidebar />
-      <Content />
+      <Sidebar inputRef={inputRef} />
+      <Content inputRef={inputRef} />
     </Container>
   )
 }
