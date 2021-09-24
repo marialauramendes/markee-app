@@ -4,6 +4,6 @@ export type archivesProps = {
   content: string
   active: boolean
   status: 'editing' | 'saving' | 'saved'
-}[]
+}
 
 export { }
