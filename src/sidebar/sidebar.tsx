@@ -61,6 +61,12 @@ function Sidebar ({ archives, setArchives, inputRef, setContent, setTitle }: Sid
     })
   }
 
+  const handleDelete = (item: archivesProps) => (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    const selectedFile = item.id
+    setArchives(prevState => prevState.filter(item => item.id !== selectedFile))
+  }
+
   return (
     <SidebarWrapper>
       <Header />
@@ -84,7 +90,7 @@ function Sidebar ({ archives, setArchives, inputRef, setContent, setTitle }: Sid
                 {item.active && item.status === 'saving' && <Loading />}
                 {item.active && item.status === 'saved' && <Saved />}
               </Status>
-              {item.active === false && <DeleteButton><Delete /></DeleteButton>}
+              {item.active === false && <DeleteButton onClick={handleDelete(item)}><Delete /></DeleteButton>}
             </ListItem>
           ))},
         </List>

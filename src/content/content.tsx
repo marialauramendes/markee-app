@@ -22,13 +22,13 @@ type ContentProps = {
   archives: archivesProps[],
   setArchives: Dispatch<SetStateAction<archivesProps[]>>,
   inputRef: RefObject<HTMLInputElement>,
-  content: string,
-  setContent: Dispatch<SetStateAction<string>>,
   title: string,
   setTitle: Dispatch<SetStateAction<string>>,
+  content: string,
+  setContent: Dispatch<SetStateAction<string>>,
 }
 
-function Content ({ content, setContent, archives, setArchives, inputRef, title, setTitle }: ContentProps) {
+function Content ({ archives, setArchives, inputRef, title, setTitle, content, setContent }: ContentProps) {
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value)
 
