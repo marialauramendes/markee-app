@@ -36,10 +36,18 @@ function Content ({ content, setContent, archives, setArchives, inputRef, title,
     if (activeItem !== undefined) {
       setArchives(archives.map((archive) => {
         if (archive.id === activeItem.id) {
-          activeItem.name = e.target.value
-          return activeItem
+          return {
+            ...activeItem,
+            name: e.target.value,
+            active: true,
+            status: 'editing',
+          }
         } else {
-          return archive
+          return {
+            ...archive,
+            active: false,
+            status: 'saved',
+          }
         }
       }))
     }
@@ -50,10 +58,18 @@ function Content ({ content, setContent, archives, setArchives, inputRef, title,
     if (activeItem !== undefined) {
       setArchives(archives.map((archive) => {
         if (archive.id === activeItem.id) {
-          activeItem.content = e.target.value
-          return activeItem
+          return {
+            ...activeItem,
+            content: e.target.value,
+            active: true,
+            status: 'editing',
+          }
         } else {
-          return archive
+          return {
+            ...archive,
+            active: false,
+            status: 'saved',
+          }
         }
       }))
     }

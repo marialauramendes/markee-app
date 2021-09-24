@@ -1,7 +1,7 @@
 import styled from 'styled-components/macro'
 import { Sidebar } from 'sidebar'
 import { Content } from 'content'
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { archivesProps } from 'resources/types/archives-props'
 
 function App () {
@@ -9,6 +9,47 @@ function App () {
   const [content, setContent] = useState('')
   const [title, setTitle] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    function updateStatus () {
+      const activeItem = archives.find(item => item.active === true)
+      if (activeItem === undefined || activeItem.status !== 'editing') {
+        return activeItem
+      } else {
+        setTimeout(() => {
+          setArchives(
+            archives.map((archive) => {
+              if (archive.id === activeItem.id) {
+                return {
+                  ...activeItem,
+                  status: 'saving',
+                }
+              } else {
+                return archive
+              }
+            }),
+          )
+          setTimeout(() => {
+            setArchives(
+              archives.map(archive => {
+                if (archive.id === activeItem.id) {
+                  return {
+                    ...activeItem,
+                    status: 'saved',
+                  }
+                } else {
+                  return archive
+                }
+              }),
+            )
+          }, 300)
+        }, 300)
+      }
+    }
+
+    updateStatus()
+    return () => clearTimeout()
+  }, [archives])
 
   return (
     <Container>

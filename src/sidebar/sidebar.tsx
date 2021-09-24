@@ -16,7 +16,7 @@ type SidebarProps = {
 }
 
 function Sidebar ({ archives, setArchives, inputRef, setContent, setTitle }: SidebarProps) {
-  const handleClick = () => {
+  const handleCreateFile = () => {
     inputRef.current?.focus()
 
     setArchives(archives => archives.map(
@@ -35,11 +35,24 @@ function Sidebar ({ archives, setArchives, inputRef, setContent, setTitle }: Sid
 
   const handleSelectedFile = (item: archivesProps) => (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
-    const selectedFile = item.id
+    const selectedFile = item
     archives.map((archive) => {
-      if (archive.id === selectedFile) {
+      if (archive.id === selectedFile.id) {
         setContent(archive.content)
         setTitle(archive.name)
+        setArchives(archives.map((archive) => {
+          if (archive.id === selectedFile.id) {
+            return {
+              ...selectedFile,
+              active: true,
+            }
+          } else {
+            return {
+              ...archive,
+              active: false,
+            }
+          }
+        }))
         inputRef.current?.focus()
         return selectedFile
       } else {
@@ -52,7 +65,7 @@ function Sidebar ({ archives, setArchives, inputRef, setContent, setTitle }: Sid
     <SidebarWrapper>
       <Header />
       <Subtitle />
-      <Button type='button' onClick={handleClick}>
+      <Button type='button' onClick={handleCreateFile}>
         <img src={Add} alt='add' />
         Adicionar arquivo
       </Button>
