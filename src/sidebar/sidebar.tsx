@@ -4,17 +4,16 @@ import Add from 'icons/add-icon.svg'
 import { FileIcon, Editing, Saved, Delete } from '../icons'
 import { SidebarWrapper, Button, List, ListItem, Link, Status, DeleteButton, Loading } from './sidebar-styles'
 import { archivesProps } from 'resources/types/archives-props'
-import { useState, RefObject } from 'react'
+import { Dispatch, SetStateAction, RefObject } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
 type SidebarProps = {
+  archives: archivesProps,
+  setArchives: Dispatch<SetStateAction<archivesProps>>,
   inputRef: RefObject<HTMLInputElement>
 }
 
-function Sidebar ({ inputRef }: SidebarProps) {
-  const [archives, setArchives] = useState<archivesProps>([])
-  console.log(archives)
-
+function Sidebar ({ archives, setArchives, inputRef }: SidebarProps) {
   const handleClick = () => {
     inputRef.current?.focus()
 

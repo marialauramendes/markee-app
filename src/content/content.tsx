@@ -1,8 +1,9 @@
 import styled from 'styled-components/macro'
 import FileBlueIcon from 'icons/file-blue-icon.svg'
-import { ChangeEvent, RefObject, useState } from 'react'
+import { ChangeEvent, Dispatch, RefObject, SetStateAction, useState } from 'react'
 import marked from 'marked'
 import 'highlight.js/styles/github.css'
+import { archivesProps } from 'resources/types/archives-props'
 
 import('highlight.js').then(hljs => {
   const h = hljs.default
@@ -18,23 +19,52 @@ import('highlight.js').then(hljs => {
   })
 })
 
-type ContentProps ={
+type ContentProps = {
+  archives: archivesProps,
+  setArchives: Dispatch<SetStateAction<archivesProps>>,
   inputRef: RefObject<HTMLInputElement>
 }
 
-function Content ({ inputRef }: ContentProps) {
+function Content ({ archives, setArchives, inputRef }: ContentProps) {
   const [content, setContent] = useState('')
+  // const [title, setTitle] = useState('')
 
-  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+  const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const itemAtivo = archives.find(item => item.active === true)
+    if (itemAtivo !== undefined) {
+      setArchives(archives.map((archive) => {
+        if (archive.id === itemAtivo.id) {
+          itemAtivo.name = e.target.value
+          return itemAtivo
+        } else {
+          return archive
+        }
+      }))
+      console.log(archives)
+      console.log(itemAtivo.name)
+    }
+  }
+  const handleContentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value)
+    const itemAtivo = archives.find(item => item.active === true)
+    if (itemAtivo !== undefined) {
+      setArchives(archives.map((archive) => {
+        if (archive.id === itemAtivo.id) {
+          itemAtivo.content = e.target.value
+          return itemAtivo
+        } else {
+          return archive
+        }
+      }))
+    }
   }
 
   return (
     <Main>
-      <Input type='text' defaultValue='Sem título' ref={inputRef} />
+      <Input type='text' ref={inputRef} defaultValue='sem título' onChange={handleTitleChange} />
       <ContainerFlex>
         <Plaintext>
-          <Textarea placeholder='Digite aqui seu markdown' value={content} onChange={handleChange} />
+          <Textarea placeholder='Digite aqui seu markdown' value={content} onChange={handleContentChange} />
         </Plaintext>
         <Output dangerouslySetInnerHTML={{ __html: marked(content) }} />
       </ContainerFlex>
