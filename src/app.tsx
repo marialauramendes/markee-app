@@ -5,14 +5,15 @@ import { useState, useRef } from 'react'
 import { archivesProps } from 'resources/types/archives-props'
 
 function App () {
-  const [archives, setArchives] = useState<archivesProps>([])
-
+  const [archives, setArchives] = useState<archivesProps[]>([])
+  const [content, setContent] = useState('')
+  const [title, setTitle] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
 
   return (
     <Container>
-      <Sidebar inputRef={inputRef} archives={archives} setArchives={setArchives} />
-      <Content inputRef={inputRef} archives={archives} setArchives={setArchives} />
+      <Sidebar inputRef={inputRef} archives={archives} setArchives={setArchives} setContent={setContent} setTitle={setTitle} />
+      <Content inputRef={inputRef} archives={archives} setArchives={setArchives} content={content} setContent={setContent} title={title} setTitle={setTitle} />
     </Container>
   )
 }

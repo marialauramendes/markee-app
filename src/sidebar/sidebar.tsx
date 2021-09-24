@@ -4,16 +4,18 @@ import Add from 'icons/add-icon.svg'
 import { FileIcon, Editing, Saved, Delete } from '../icons'
 import { SidebarWrapper, Button, List, ListItem, Link, Status, DeleteButton, Loading } from './sidebar-styles'
 import { archivesProps } from 'resources/types/archives-props'
-import { Dispatch, SetStateAction, RefObject } from 'react'
+import { Dispatch, SetStateAction, RefObject, MouseEvent } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
 type SidebarProps = {
-  archives: archivesProps,
-  setArchives: Dispatch<SetStateAction<archivesProps>>,
-  inputRef: RefObject<HTMLInputElement>
+  archives: archivesProps[],
+  setArchives: Dispatch<SetStateAction<archivesProps[]>>,
+  inputRef: RefObject<HTMLInputElement>,
+  setContent: Dispatch<SetStateAction<string>>,
+  setTitle: Dispatch<SetStateAction<string>>,
 }
 
-function Sidebar ({ archives, setArchives, inputRef }: SidebarProps) {
+function Sidebar ({ archives, setArchives, inputRef, setContent, setTitle }: SidebarProps) {
   const handleClick = () => {
     inputRef.current?.focus()
 
@@ -31,6 +33,21 @@ function Sidebar ({ archives, setArchives, inputRef }: SidebarProps) {
     )
   }
 
+  const handleSelectedFile = (item: archivesProps) => (e: MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault()
+    const selectedFile = item.id
+    archives.map((archive) => {
+      if (archive.id === selectedFile) {
+        setContent(archive.content)
+        setTitle(archive.name)
+        inputRef.current?.focus()
+        return selectedFile
+      } else {
+        return archive
+      }
+    })
+  }
+
   return (
     <SidebarWrapper>
       <Header />
@@ -43,7 +60,9 @@ function Sidebar ({ archives, setArchives, inputRef }: SidebarProps) {
         <List>
           {archives.map((item) => (
             <ListItem key={`file/${item.id}`} active={item.active}>
-              <Link href={item.id}>
+              <Link
+                href={item.id} onClick={handleSelectedFile(item)}
+              >
                 <FileIcon />
                 {item.name}
               </Link>

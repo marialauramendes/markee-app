@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro'
 import FileBlueIcon from 'icons/file-blue-icon.svg'
-import { ChangeEvent, Dispatch, RefObject, SetStateAction, useState } from 'react'
+import { ChangeEvent, Dispatch, RefObject, SetStateAction } from 'react'
 import marked from 'marked'
 import 'highlight.js/styles/github.css'
 import { archivesProps } from 'resources/types/archives-props'
@@ -20,38 +20,39 @@ import('highlight.js').then(hljs => {
 })
 
 type ContentProps = {
-  archives: archivesProps,
-  setArchives: Dispatch<SetStateAction<archivesProps>>,
-  inputRef: RefObject<HTMLInputElement>
+  archives: archivesProps[],
+  setArchives: Dispatch<SetStateAction<archivesProps[]>>,
+  inputRef: RefObject<HTMLInputElement>,
+  content: string,
+  setContent: Dispatch<SetStateAction<string>>,
+  title: string,
+  setTitle: Dispatch<SetStateAction<string>>,
 }
 
-function Content ({ archives, setArchives, inputRef }: ContentProps) {
-  const [content, setContent] = useState('')
-  // const [title, setTitle] = useState('')
-
+function Content ({ content, setContent, archives, setArchives, inputRef, title, setTitle }: ContentProps) {
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const itemAtivo = archives.find(item => item.active === true)
-    if (itemAtivo !== undefined) {
+    setTitle(e.target.value)
+
+    const activeItem = archives.find(item => item.active === true)
+    if (activeItem !== undefined) {
       setArchives(archives.map((archive) => {
-        if (archive.id === itemAtivo.id) {
-          itemAtivo.name = e.target.value
-          return itemAtivo
+        if (archive.id === activeItem.id) {
+          activeItem.name = e.target.value
+          return activeItem
         } else {
           return archive
         }
       }))
-      console.log(archives)
-      console.log(itemAtivo.name)
     }
   }
   const handleContentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value)
-    const itemAtivo = archives.find(item => item.active === true)
-    if (itemAtivo !== undefined) {
+    const activeItem = archives.find(item => item.active === true)
+    if (activeItem !== undefined) {
       setArchives(archives.map((archive) => {
-        if (archive.id === itemAtivo.id) {
-          itemAtivo.content = e.target.value
-          return itemAtivo
+        if (archive.id === activeItem.id) {
+          activeItem.content = e.target.value
+          return activeItem
         } else {
           return archive
         }
@@ -61,7 +62,7 @@ function Content ({ archives, setArchives, inputRef }: ContentProps) {
 
   return (
     <Main>
-      <Input type='text' ref={inputRef} defaultValue='sem título' onChange={handleTitleChange} />
+      <Input type='text' ref={inputRef} placeholder='sem título' value={title} onChange={handleTitleChange} />
       <ContainerFlex>
         <Plaintext>
           <Textarea placeholder='Digite aqui seu markdown' value={content} onChange={handleContentChange} />
