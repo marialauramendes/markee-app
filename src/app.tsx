@@ -10,44 +10,43 @@ function App () {
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
+    let timer: ReturnType<typeof setTimeout>
+
     function updateStatus () {
       const activeItem = archives.find(item => item.active === true)
       if (activeItem === undefined || activeItem.status !== 'editing') {
         return activeItem
-      } else {
+      }
+      timer = setTimeout(() => {
+        setArchives(archives =>
+          archives.map((archive) => {
+            if (archive.id === activeItem.id) {
+              return {
+                ...activeItem,
+                status: 'saving',
+              }
+            }
+            return archive
+          }),
+        )
         setTimeout(() => {
-          setArchives(
-            archives.map((archive) => {
+          setArchives(archives =>
+            archives.map(archive => {
               if (archive.id === activeItem.id) {
                 return {
                   ...activeItem,
-                  status: 'saving',
+                  status: 'saved',
                 }
-              } else {
-                return archive
               }
+              return archive
             }),
           )
-          setTimeout(() => {
-            setArchives(
-              archives.map(archive => {
-                if (archive.id === activeItem.id) {
-                  return {
-                    ...activeItem,
-                    status: 'saved',
-                  }
-                } else {
-                  return archive
-                }
-              }),
-            )
-          }, 300)
         }, 300)
-      }
+      }, 300)
     }
 
     updateStatus()
-    return () => clearTimeout()
+    return () => clearTimeout(timer)
   }, [archives])
 
   const handleCreateFile = () => {
@@ -72,7 +71,7 @@ function App () {
     const selectedFile = item
     archives.map((archive) => {
       if (archive.id === selectedFile.id) {
-        setArchives(archives.map((archive) => {
+        setArchives(archives => archives.map((archive) => {
           if (archive.id === selectedFile.id) {
             return {
               ...selectedFile,
@@ -80,18 +79,13 @@ function App () {
               content: archive.content,
               name: archive.name,
             }
-          } else {
-            return {
-              ...archive,
-              active: false,
-            }
           }
+          return archive
         }))
         inputRef.current?.focus()
         return selectedFile
-      } else {
-        return archive
       }
+      return archive
     })
   }
 
@@ -103,46 +97,32 @@ function App () {
 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const activeItem = archives.find(item => item.active === true)
-    if (activeItem !== undefined) {
-      setArchives(archives.map((archive) => {
-        if (archive.id === activeItem.id) {
-          return {
-            ...activeItem,
-            name: e.target.value,
-            active: true,
-            status: 'editing',
-          }
-        } else {
-          return {
-            ...archive,
-            active: false,
-            status: 'saved',
-          }
+
+    setArchives(archives => archives.map((archive) => {
+      if (archive.id === activeItem?.id) {
+        return {
+          ...activeItem,
+          name: e.target.value,
+          status: 'editing',
         }
-      }))
-    }
+      }
+      return archive
+    }))
   }
 
   const handleContentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const activeItem = archives.find(item => item.active === true)
-    if (activeItem !== undefined) {
-      setArchives(archives.map((archive) => {
-        if (archive.id === activeItem.id) {
-          return {
-            ...activeItem,
-            content: e.target.value,
-            active: true,
-            status: 'editing',
-          }
-        } else {
-          return {
-            ...archive,
-            active: false,
-            status: 'saved',
-          }
+
+    setArchives(archives => archives.map((archive) => {
+      if (archive.id === activeItem?.id) {
+        return {
+          ...activeItem,
+          content: e.target.value,
+          status: 'editing',
         }
-      }))
-    }
+      }
+      return archive
+    }))
   }
 
   return (
