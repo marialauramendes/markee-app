@@ -54,6 +54,20 @@ export function useFiles () {
     storage()
   }, [archives])
 
+  useEffect(() => {
+    function getStorage () {
+      localforage.getItem<archivesProps[]>('archives').then(response => {
+        if (response !== null) {
+          setArchives(response)
+        } else {
+          handleCreateFile()
+        }
+      })
+    }
+
+    getStorage()
+  }, [])
+
   const handleCreateFile = () => {
     inputRef.current?.focus()
 
