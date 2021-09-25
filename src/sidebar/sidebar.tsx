@@ -4,39 +4,21 @@ import Add from 'icons/add-icon.svg'
 import { FileIcon, Editing, Saved, Delete } from '../icons'
 import { SidebarWrapper, Button, List, ListItem, Link, Status, DeleteButton, Loading } from './sidebar-styles'
 import { archivesProps } from 'resources/types/archives-props'
-import { useState, RefObject } from 'react'
-import { v4 as uuidv4 } from 'uuid'
+import { MouseEvent } from 'react'
 
 type SidebarProps = {
-  inputRef: RefObject<HTMLInputElement>
+  archives: archivesProps[],
+  onCreateFile: () => void,
+  onSelectFile: (item: archivesProps) => (e: MouseEvent) => void,
+  onDelete: (item: archivesProps) => (e: MouseEvent) => void,
 }
 
-function Sidebar ({ inputRef }: SidebarProps) {
-  const [archives, setArchives] = useState<archivesProps>([])
-  console.log(archives)
-
-  const handleClick = () => {
-    inputRef.current?.focus()
-
-    setArchives(archives => archives.map(
-      item => ({
-        ...item,
-        active: false,
-      })).concat({
-      id: uuidv4(),
-      name: 'Sem título',
-      content: '',
-      active: true,
-      status: 'saved',
-    }),
-    )
-  }
-
+function Sidebar ({ archives, onCreateFile, onSelectFile, onDelete }: SidebarProps) {
   return (
     <SidebarWrapper>
       <Header />
       <Subtitle />
-      <Button type='button' onClick={handleClick}>
+      <Button type='button' onClick={onCreateFile}>
         <img src={Add} alt='add' />
         Adicionar arquivo
       </Button>
@@ -44,7 +26,9 @@ function Sidebar ({ inputRef }: SidebarProps) {
         <List>
           {archives.map((item) => (
             <ListItem key={`file/${item.id}`} active={item.active}>
-              <Link href={item.id}>
+              <Link
+                href={item.id} onClick={onSelectFile(item)}
+              >
                 <FileIcon />
                 {item.name}
               </Link>
@@ -53,7 +37,7 @@ function Sidebar ({ inputRef }: SidebarProps) {
                 {item.active && item.status === 'saving' && <Loading />}
                 {item.active && item.status === 'saved' && <Saved />}
               </Status>
-              {item.active === false && <DeleteButton><Delete /></DeleteButton>}
+              {item.active === false && <DeleteButton onClick={onDelete(item)}><Delete /></DeleteButton>}
             </ListItem>
           ))},
         </List>
