@@ -31,7 +31,7 @@ function Content ({ onTitleChange, onContentChange, inputRef, archive }: Content
   }
   return (
     <Main>
-      <Input type='text' ref={inputRef} placeholder='sem título' value={archive.name} onChange={onTitleChange} />
+      <Input type='text' ref={inputRef} placeholder='sem título' value={archive.name} onChange={onTitleChange} autoFocus />
       <ContainerFlex>
         <Plaintext>
           <Textarea placeholder='Digite aqui seu markdown' value={archive.content} onChange={onContentChange} />
