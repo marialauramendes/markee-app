@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, ChangeEvent, MouseEvent } from 'react'
 import { archivesProps } from 'resources/types/archives-props'
 import { v4 as uuidv4 } from 'uuid'
+import localforage from 'localforage'
 
 export function useFiles () {
   const [archives, setArchives] = useState<archivesProps[]>([])
@@ -44,6 +45,13 @@ export function useFiles () {
 
     updateStatus()
     return () => clearTimeout(timer)
+  }, [archives])
+
+  useEffect(() => {
+    function storage () {
+      localforage.setItem<archivesProps[]>('archives', archives).then(response => response)
+    }
+    storage()
   }, [archives])
 
   const handleCreateFile = () => {
