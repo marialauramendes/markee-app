@@ -68,6 +68,13 @@ export function useFiles () {
     getStorage()
   }, [])
 
+  useEffect(() => {
+    const activeItem = archives.find(archive => archive.active === true)
+    if (activeItem) {
+      window.history.pushState(null, '', `/file/${activeItem.id}`)
+    }
+  })
+
   const handleCreateFile = () => {
     inputRef.current?.focus()
 

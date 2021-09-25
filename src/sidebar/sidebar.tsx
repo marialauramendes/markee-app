@@ -25,7 +25,7 @@ function Sidebar ({ archives, onCreateFile, onSelectFile, onDelete }: SidebarPro
       <nav>
         <List>
           {archives.map((item) => (
-            <ListItem key={`file/${item.id}`} active={item.active}>
+            <ListItem key={item.id} active={item.active}>
               <Link
                 href={item.id} onClick={onSelectFile(item)}
               >
