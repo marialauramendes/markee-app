@@ -22,7 +22,7 @@ function App () {
           archives.map((archive) => {
             if (archive.id === activeItem.id) {
               return {
-                ...activeItem,
+                ...archive,
                 status: 'saving',
               }
             }
@@ -34,7 +34,7 @@ function App () {
             archives.map(archive => {
               if (archive.id === activeItem.id) {
                 return {
-                  ...activeItem,
+                  ...archive,
                   status: 'saved',
                 }
               }
@@ -74,7 +74,7 @@ function App () {
         setArchives(archives => archives.map((archive) => {
           if (archive.id === selectedFile.id) {
             return {
-              ...selectedFile,
+              ...archive,
               active: true,
               content: archive.content,
               name: archive.name,
@@ -101,7 +101,7 @@ function App () {
     setArchives(archives => archives.map((archive) => {
       if (archive.id === activeItem?.id) {
         return {
-          ...activeItem,
+          ...archive,
           name: e.target.value,
           status: 'editing',
         }
@@ -116,7 +116,7 @@ function App () {
     setArchives(archives => archives.map((archive) => {
       if (archive.id === activeItem?.id) {
         return {
-          ...activeItem,
+          ...archive,
           content: e.target.value,
           status: 'editing',
         }
